@@ -1,17 +1,22 @@
-﻿Build started 11/15/2015 8:43:23 PM.
-     1>Project "C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\ParticleSystem\ParticleSystem.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/16/2015 11:22:20 AM.
+     1>Project "C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\ParticleSystem\ParticleSystem.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
-     1>c:\users\nathan\desktop\particleengine\particlesystem\particlesystem\main.cpp(48): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\nathan\desktop\particleengine\particlesystem\particlesystem\main.cpp(106): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ParticleSystem.cpp
+         ParticleSystem.cpp
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(36): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(49): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(54): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(92): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(93): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(123): warning C4244: 'argument' : conversion from 'float' to 'sf::Uint8', possible loss of data
+     1>c:\users\wilsoncs30\desktop\particleengine\particlesystem\particlesystem\particlesystem.cpp(135): warning C4018: '<' : signed/unsigned mismatch
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.exe" /INCREMENTAL /NOLOGO "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.lib" /MACHINE:X86 Debug\Main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.exe" /INCREMENTAL /NOLOGO "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.lib" /MACHINE:X86 Debug\Main.obj
          Debug\Particle.obj
          Debug\ParticleSystem.obj
-         ParticleSystem.vcxproj -> C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.exe
-     1>Done Building Project "C:\Users\Nathan\Desktop\ParticleEngine\ParticleSystem\ParticleSystem\ParticleSystem.vcxproj" (Build target(s)).
+         ParticleSystem.vcxproj -> C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\Debug\ParticleSystem.exe
+     1>Done Building Project "C:\Users\WilsonCS30\Desktop\ParticleEngine\ParticleSystem\ParticleSystem\ParticleSystem.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.65
+Time Elapsed 00:00:00.77

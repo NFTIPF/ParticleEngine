@@ -30,9 +30,11 @@ int main()
 	ParticleSystem ps(sf::Vector2f(600, 700));
 
 	sf::Clock clock;
+	sf::Time lastTime;
+	sf::Time currentTime;
 	sf::Font myfont;
 	myfont.loadFromFile("arial.ttf");
-	float lastTime = 0;
+
 	sf::Text fpsText("", myfont);
 	fpsText.setCharacterSize(20);
 	fpsText.setStyle(sf::Text::Bold);
@@ -46,6 +48,7 @@ int main()
 		return -1;
 
 	shader.setParameter("resolution", destination.getSize().x, destination.getSize().y);
+	std::thread t1, t2;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -56,12 +59,16 @@ int main()
 		}
 
 		window.clear(sf::Color::White);
-		destination.clear(sf::Color::White);
+		destination.clear(sf::Color::Black);
 
+		
+		//t1 = std::thread(&ParticleSystem::update, &ps);
+		//t2 = std::thread(&ParticleSystem::update, &ps2);
+		//t1.detach();
+		//t2.detach();
+		//auto t1 = std::async(&ParticleSystem::update, ps);
+		//auto t2 = std::async(&ParticleSystem::update, ps2);
 		/*
-		auto t1 = std::async(&ParticleSystem::update, ps);
-		auto t2 = std::async(&ParticleSystem::update, ps2);
-
 		while (true)
 		{
 			auto s1 = t1.wait_for(std::chrono::seconds(0));
@@ -86,22 +93,24 @@ int main()
 	
 		//t1.join();
 		//t2.join();
+		ps.setMousePos(sf::Mouse::getPosition(window));
 		ps.update();
-		ps2.update();
+		//ps2.update();
+
 		ps.draw(destination);
-		ps2.draw(destination);
+		//ps2.draw(destination);
 
 		destination.display(); 
 
 		sf::Texture source = destination.getTexture();
-		shader.setParameter("blur_radius", 3.0f);
+		//shader.setParameter("blur_radius", 2.0f);
 		shader.setParameter("texture", source);
 		sf::Sprite mySprite(destination.getTexture());
 		window.draw(mySprite, &shader);
 		
 		
-		float currentTime = clock.restart().asSeconds();
-		float fps = 1.f / (currentTime - lastTime);
+		currentTime = clock.getElapsedTime();
+		float fps = 1.f / (currentTime.asSeconds()-lastTime.asSeconds());
 		lastTime = currentTime;
 		fpsText.setString(intToString(fps));
 		window.draw(fpsText);

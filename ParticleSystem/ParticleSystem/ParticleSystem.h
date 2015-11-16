@@ -2,6 +2,7 @@
 #include "Particle.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <thread>
 
 class ParticleSystem
 {
@@ -13,16 +14,19 @@ public:
 	void draw(sf::RenderTexture& texture);
 	void update();
 	void init();
-
-	void doFrame(sf::RenderWindow& window); //function for threading
+	void setMousePos(const sf::Vector2i& mP);
+	void doFrame(sf::RenderTexture& window); //function for threading
 	
 private:
 	std::vector <Particle*> particles;
-	sf::CircleShape particle;
+	sf::CircleShape particle; 
+	std::vector<sf::Vertex> vertices;
 	sf::Vector2f origin;
 	int emmitanceRate;
 	int numParticles;
 	int currentIndex;
 	sf::Vector2f systemForce;
+	sf::Shader circleShader;
+	sf::Vector2i mousePos;
 
 };

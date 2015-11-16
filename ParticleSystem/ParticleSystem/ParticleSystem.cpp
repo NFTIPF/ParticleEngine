@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 #include <iostream>
-
+#define PI 3.1415
 float Clamp(float value, float min, float max)
 {
 	if (value < min)
@@ -22,12 +22,12 @@ float Clamp(float value, float min, float max)
 ParticleSystem::ParticleSystem(sf::Vector2f position)
 {
 	origin = position;
-	emmitanceRate = 10;
-	numParticles = 3000;
+	emmitanceRate = 50;
+	numParticles = 30000;
 	currentIndex = 0;
 	systemForce = sf::Vector2f(-.00f, -.03f);
-	particle.setRadius(5);
-	
+	particle.setRadius(2);
+	circleShader.loadFromFile("circleShader.frag", sf::Shader::Fragment);
 	init();
 }
 
@@ -45,6 +45,7 @@ void ParticleSystem::addParticle()
 
 void ParticleSystem::update()
 {
+	origin =(sf::Vector2f)mousePos;
 	if (particles.size() - currentIndex+1 < emmitanceRate) //if the emmitance rate would attempt to call out of bounds thing, reset currentIndex
 	{
 		currentIndex = 0;
@@ -59,6 +60,10 @@ void ParticleSystem::update()
 	sf::Vector2f particleForce;
 	for (unsigned int ii = 0; ii < particles.size(); ii++)
 	{
+		if (particles[ii]->getPosition().y > 700)
+		{
+			particles[ii]->activate(0); //activate as dead
+		}
 		if (!particles[ii]->isDead()) //if its not dead
 		{
 			particles[ii]->applyForce(systemForce);
@@ -77,32 +82,65 @@ void ParticleSystem::update()
 	currentIndex += emmitanceRate;
 }
 
+void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
+{
+	
+	std::vector<sf::Vertex> verts;
+	sf::Vertex tmp;
+	for (int ii = 0; ii < 10; ii++)
+	{
+		tmp.position.x = cos((2 * PI * ii) / 10) * 3 + v.position.x;
+		tmp.position.y = sin((2 * PI * ii) / 10) * 3 + v.position.y;
+		tmp.color = v.color;
+		va.push_back(tmp);
+	}
+	
+}
+
+void ParticleSystem::setMousePos(const sf::Vector2i& mP)
+{
+	mousePos = mP;
+	mousePos.y
+}
 void ParticleSystem::draw(sf::RenderTexture& window)
 {
+	//sf::Color colors[30000];
+	//float Xpositions[30000];
+	//float Ypositions[30000];
+	sf::VertexArray v(sf::Points, 10);
+	sf::Vertex tmp;
 	for (unsigned int ii = particles.size() - 1; ii > 0; ii--)
 	{
 		if (!particles[ii]->isDead())
 		{
-			particle.setPosition(particles[ii]->getPosition());
 			float randomR = 210 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 40));
 			float randomG = 90 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 20));
 			float randomB = 35 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 5));
-			particle.setFillColor(sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity()));
-			window.draw(particle);
+			//Xpositions[ii] = particles[ii]->getPosition().x;
+			//Ypositions[ii] = particles[ii]->getPosition().y;
+			//colors[ii] = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
+			tmp.position = particles[ii]->getPosition();
+			tmp.color = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
+			//makeCircle(tmp, vertices);
+			vertices.push_back(tmp);
 		}
 	}
+	
+	window.draw(&vertices[0], vertices.size(), sf::Points);
+	vertices.clear();
 }
 
 ParticleSystem::~ParticleSystem()
 {
 	for (int ii = 0; ii < particles.size(); ii++)
 	{
-		delete particles[ii];
+		//delete particles[ii];
 	}
 }
 
-void ParticleSystem::doFrame(sf::RenderWindow& window) //function for threading
+void ParticleSystem::doFrame(sf::RenderTexture& window) //function for threading
 {
-	update();
-	//draw();
+	//std::thread t1(&ParticleSystem::update, this);
+	//t1.detach();
+	draw(window);
 }
