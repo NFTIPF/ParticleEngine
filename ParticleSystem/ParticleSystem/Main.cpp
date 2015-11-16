@@ -44,6 +44,8 @@ int main()
 	sf::RenderTexture source;	//source for shader
 	if (!destination.create(800, 800))
 		return -1;
+
+	shader.setParameter("resolution", destination.getSize().x, destination.getSize().y);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -92,7 +94,7 @@ int main()
 		destination.display(); 
 
 		sf::Texture source = destination.getTexture();
-		shader.setParameter("blur_radius", 2.0f);
+		shader.setParameter("blur_radius", 3.0f);
 		shader.setParameter("texture", source);
 		sf::Sprite mySprite(destination.getTexture());
 		window.draw(mySprite, &shader);

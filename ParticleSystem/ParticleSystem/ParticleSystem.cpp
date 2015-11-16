@@ -22,11 +22,11 @@ float Clamp(float value, float min, float max)
 ParticleSystem::ParticleSystem(sf::Vector2f position)
 {
 	origin = position;
-	emmitanceRate = 25;
-	numParticles = 5000;
+	emmitanceRate = 10;
+	numParticles = 3000;
 	currentIndex = 0;
 	systemForce = sf::Vector2f(-.00f, -.03f);
-	particle.setRadius(2);
+	particle.setRadius(5);
 	
 	init();
 }
