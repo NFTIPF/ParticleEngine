@@ -100,7 +100,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 void ParticleSystem::setMousePos(const sf::Vector2i& mP)
 {
 	mousePos = mP;
-	mousePos.y
+	mousePos.y = 800 - mousePos.y;
 }
 void ParticleSystem::draw(sf::RenderTexture& window)
 {
