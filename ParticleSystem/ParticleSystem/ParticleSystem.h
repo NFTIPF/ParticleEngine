@@ -7,7 +7,7 @@
 class ParticleSystem
 {
 public:
-	ParticleSystem(sf::Vector2f pos, sf::Vector2f systemS);
+	ParticleSystem(sf::Vector2f pos, sf::Vector2f systemS, std::string texturePath);
 	~ParticleSystem();
 	void addParticle();
 	//void draw(sf::RenderWindow& window);
@@ -26,7 +26,6 @@ private:
 	int numParticles;
 	int currentIndex;
 	sf::Vector2f systemForce;
-	sf::Shader circleShader;
 	sf::Vector2i mousePos;
 	sf::Texture texture;
 	sf::Vertex tmp;

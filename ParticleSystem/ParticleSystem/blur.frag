@@ -49,19 +49,22 @@ void main()
 	
 	//pixel /= 2;
 	vec4 white = vec4(1, 1, 1, 1);
-	vec4 deepColor = vec4(.15, .3, .88, 1);//vec4(.8863, .3451, .1373, 1.0);
+	vec4 deepColor = vec4(.1, .2, .4, 1);//vec4(.8863, .3451, .1373, 1.0);
 	vec4 highlightColor = vec4(.8863, .3451, .1373, 1.0);
 	vec4 deepPercent = deepColor/highlightColor;
 	vec4 highlightPercent = highlightColor/deepColor;
 	vec2 mousePos = vec2(mousePosition.x, 1080-mousePosition.y);
 	vec2 mouseDelta = abs(gl_FragCoord.xy - mousePos);
 	float mouseDistance = mouseDelta.x * mouseDelta.x + mouseDelta.y*mouseDelta.y;
-	mouseDistance = clamp(sqrt(mouseDistance)/100,0, 20000);
+	mouseDistance = clamp(sqrt(sqrt(mouseDistance))/100,.2, 200);
 
 	//pixel = vec4(0, .001, 0, 255) * mouseDistance;
 	//pixel.a = 255;
-	vec4 pixelMult = deepColor * highlightPercent/mouseDistance;
-	pixel = texture2D(texture, xyCoord)* pixelMult;
+	vec4 locationTexture = texture2D(texture, xyCoord);
+	vec4 finalDeepColor = deepColor * (1/locationTexture.a);
+	vec4 finalHighlightColor = highlightColor * locationTexture.a;
+	vec4 pixelMult = finalDeepColor*mouseDistance + finalHighlightColor/mouseDistance;
+	pixel = locationTexture * pixelMult;
 	
 	//if(mouseDistance < 600)
 	//{

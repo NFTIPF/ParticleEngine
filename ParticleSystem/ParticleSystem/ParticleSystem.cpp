@@ -19,16 +19,15 @@ float Clamp(float value, float min, float max)
 	return value; // default return
 }
 
-ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS)
+ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS, std::string texturePath)
 {
 	origin = position;
-	emmitanceRate = 100;
-	numParticles = 10000;
+	emmitanceRate = 70;
+	numParticles = 7000;
 	currentIndex = 0;
 	systemForce = sf::Vector2f(-.00f, .00f);
 	particle.setRadius(2);
-	circleShader.loadFromFile("circleShader.frag", sf::Shader::Fragment);
-	texture.loadFromFile("fire.png");
+	texture.loadFromFile(texturePath.c_str());
 	systemSize = systemS;
 	init();
 }
@@ -95,7 +94,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 	
 	std::vector<sf::Vertex> verts;
 	sf::Vertex tmp[4];
-	int halfsquareSize = 32;
+	int halfsquareSize = 64;
 	tmp[0].position = sf::Vector2f(halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[1].position = sf::Vector2f(-halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[2].position = sf::Vector2f(halfsquareSize + v.position.x, -halfsquareSize + v.position.y);
@@ -110,16 +109,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 	va.push_back(tmp[1]);
 	va.push_back(tmp[3]);
 	va.push_back(tmp[2]);
-	/*
-	for (int ii = 0; ii < 10; ii++)
-	{
-		tmp.position.x = cos((2 * PI * ii) / 10) * 3 + v.position.x;
-		tmp.position.y = sin((2 * PI * ii) / 10) * 3 + v.position.y;
-		tmp.color = v.color;
-		va.push_back(tmp);
-	}
-	*/
-	
+
 }
 
 void ParticleSystem::setMousePos(const sf::Vector2i& mP)
@@ -129,24 +119,12 @@ void ParticleSystem::setMousePos(const sf::Vector2i& mP)
 }
 void ParticleSystem::draw(sf::RenderTexture& window)
 {
-	//sf::Color colors[30000];
-	//float Xpositions[30000];
-	//float Ypositions[30000];
-	
 	for (unsigned int ii = particles.size() - 1; ii > 0; ii--)
 	{
 		if (!particles[ii]->isDead())
 		{
-			//float randomR = 210 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 40));
-			//float randomG = 90 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 20));
-			//float randomB = 35 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 5));
-			//Xpositions[ii] = particles[ii]->getPosition().x;
-			//Ypositions[ii] = particles[ii]->getPosition().y;
-			//colors[ii] = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
 			tmp.position = particles[ii]->getPosition();
-			//tmp.color = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
 			makeCircle(tmp, vertices);
-			//vertices.push_back(tmp);
 		}
 	}
 	if (vertices.size() > 1)
