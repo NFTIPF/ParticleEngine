@@ -28,5 +28,7 @@ private:
 	sf::Vector2f systemForce;
 	sf::Shader circleShader;
 	sf::Vector2i mousePos;
+	sf::Texture texture;
+	sf::Vertex tmp;
 
 };

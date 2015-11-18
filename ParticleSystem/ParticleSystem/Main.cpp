@@ -48,6 +48,7 @@ int main()
 		return -1;
 
 	shader.setParameter("resolution", destination.getSize().x, destination.getSize().y);
+
 	std::thread t1, t2;
 	while (window.isOpen())
 	{
@@ -94,6 +95,7 @@ int main()
 		//t1.join();
 		//t2.join();
 		ps.setMousePos(sf::Mouse::getPosition(window));
+		shader.setParameter("mousePosition", sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 		ps.update();
 		//ps2.update();
 
@@ -104,8 +106,9 @@ int main()
 
 		sf::Texture source = destination.getTexture();
 		//shader.setParameter("blur_radius", 2.0f);
-		shader.setParameter("texture", source);
+		
 		sf::Sprite mySprite(destination.getTexture());
+		shader.setParameter("texture", source); 
 		window.draw(mySprite, &shader);
 		
 		

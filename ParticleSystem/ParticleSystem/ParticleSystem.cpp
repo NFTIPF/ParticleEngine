@@ -22,12 +22,13 @@ float Clamp(float value, float min, float max)
 ParticleSystem::ParticleSystem(sf::Vector2f position)
 {
 	origin = position;
-	emmitanceRate = 50;
-	numParticles = 30000;
+	emmitanceRate = 2;
+	numParticles = 1000;
 	currentIndex = 0;
-	systemForce = sf::Vector2f(-.00f, -.03f);
+	systemForce = sf::Vector2f(-.04f, -.03f);
 	particle.setRadius(2);
 	circleShader.loadFromFile("circleShader.frag", sf::Shader::Fragment);
+	texture.loadFromFile("fire.png");
 	init();
 }
 
@@ -75,7 +76,8 @@ void ParticleSystem::update()
 			particleForce.x /= -3000;
 			particleForce.x = Clamp(particleForce.x, -.5f, 0.5f);
 			particleForce.y = 0;
-			particles[ii]->applyForce(particleForce);
+			//particles[ii]->applyForce(particleForce);
+			particles[ii]->applyForce(sf::Vector2f(0, -.06));
 			particles[ii]->update();
 		}
 	}
@@ -86,7 +88,23 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 {
 	
 	std::vector<sf::Vertex> verts;
-	sf::Vertex tmp;
+	sf::Vertex tmp[4];
+	int halfsquareSize = 32;
+	tmp[0].position = sf::Vector2f(32 + v.position.x, 32 + v.position.y);
+	tmp[1].position = sf::Vector2f(-32 + v.position.x, 32 + v.position.y);
+	tmp[2].position = sf::Vector2f(32 + v.position.x, -32 + v.position.y);
+	tmp[3].position = sf::Vector2f(-32 + v.position.x, -32 + v.position.y);
+
+	tmp[0].texCoords = sf::Vector2f(64, 64);
+	tmp[1].texCoords = sf::Vector2f(0, 64);
+	tmp[2].texCoords = sf::Vector2f(64, 0);
+	tmp[3].texCoords = sf::Vector2f(0, 0);
+
+	va.push_back(tmp[0]);
+	va.push_back(tmp[1]);
+	va.push_back(tmp[3]);
+	va.push_back(tmp[2]);
+	/*
 	for (int ii = 0; ii < 10; ii++)
 	{
 		tmp.position.x = cos((2 * PI * ii) / 10) * 3 + v.position.x;
@@ -94,6 +112,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 		tmp.color = v.color;
 		va.push_back(tmp);
 	}
+	*/
 	
 }
 
@@ -107,26 +126,25 @@ void ParticleSystem::draw(sf::RenderTexture& window)
 	//sf::Color colors[30000];
 	//float Xpositions[30000];
 	//float Ypositions[30000];
-	sf::VertexArray v(sf::Points, 10);
-	sf::Vertex tmp;
+	
 	for (unsigned int ii = particles.size() - 1; ii > 0; ii--)
 	{
 		if (!particles[ii]->isDead())
 		{
-			float randomR = 210 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 40));
-			float randomG = 90 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 20));
-			float randomB = 35 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 5));
+			//float randomR = 210 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 40));
+			//float randomG = 90 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 20));
+			//float randomB = 35 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 5));
 			//Xpositions[ii] = particles[ii]->getPosition().x;
 			//Ypositions[ii] = particles[ii]->getPosition().y;
 			//colors[ii] = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
 			tmp.position = particles[ii]->getPosition();
-			tmp.color = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
-			//makeCircle(tmp, vertices);
-			vertices.push_back(tmp);
+			//tmp.color = sf::Color(randomR, randomG, randomB, particles[ii]->getOpacity());
+			makeCircle(tmp, vertices);
+			//vertices.push_back(tmp);
 		}
 	}
 	
-	window.draw(&vertices[0], vertices.size(), sf::Points);
+	window.draw(&vertices[0], vertices.size(), sf::Quads, &texture);
 	vertices.clear();
 }
 

@@ -1,6 +1,7 @@
 uniform sampler2D texture;
 //uniform float blur_radius;
 uniform vec2 resolution;
+uniform vec2 mousePosition;
 
 void main()
 {
@@ -8,17 +9,17 @@ void main()
 	
 	vec4 pixel = vec4(0.0);
 	//origin
-	pixel += texture2D(texture, xyCoord + vec2(0,0)) * .333;
+	//pixel += texture2D(texture, xyCoord + vec2(0,0)) * .333;
 	//first straign
-	pixel += texture2D(texture, xyCoord + vec2(0,1)) * .111;
-	pixel += texture2D(texture, xyCoord + vec2(1,0)) * .111;
-	pixel += texture2D(texture, xyCoord + vec2(0,-1)) * .111;
-	pixel += texture2D(texture, xyCoord + vec2(-1,0)) * .111;
+	//pixel += texture2D(texture, xyCoord + vec2(0,1)) * .111;
+	//pixel += texture2D(texture, xyCoord + vec2(1,0)) * .111;
+	//pixel += texture2D(texture, xyCoord + vec2(0,-1)) * .111;
+	//pixel += texture2D(texture, xyCoord + vec2(-1,0)) * .111;
 	//fist diagonals
-	pixel += texture2D(texture, xyCoord + vec2(1,1)) * .05;
-	pixel += texture2D(texture, xyCoord + vec2(1,-1)) * .05;
-	pixel += texture2D(texture, xyCoord + vec2(-1,1)) * .05;	
-	pixel += texture2D(texture, xyCoord + vec2(-1,-1)) * .05;
+	//pixel += texture2D(texture, xyCoord + vec2(1,1)) * .05;
+	//pixel += texture2D(texture, xyCoord + vec2(1,-1)) * .05;
+	//pixel += texture2D(texture, xyCoord + vec2(-1,1)) * .05;	
+	//pixel += texture2D(texture, xyCoord + vec2(-1,-1)) * .05;
 	//second straight
 	//pixel += texture2D(texture, xyCoord + vec2(0,2)) * .013;
 	//pixel += texture2D(texture, xyCoord + vec2(0,-2)) * .013;
@@ -47,6 +48,18 @@ void main()
 	//pixel += texture2d(texture, xyCoord);
 	
 	//pixel /= 2;
+	vec4 white = vec4(255, 255, 255, 255);
+	vec4 fireColor = vec4(226, 88, 34, 255);
+	vec4 firePercent = fireColor/white;
 	
-    gl_FragColor = texture2D(texture, xyCoord);
+	vec2 mouseDelta = mousePosition - xyCoord;
+	float mouseDistance2 = mouseDelta.x * mouseDelta.x + mouseDelta.y*mouseDelta.y;
+	mouseDistance2 = 1/mouseDistance2;
+	pixel = texture2D(texture, xyCoord)*firePercent;
+	if(mouseDistance2 > .001)
+	{
+		pixel += white*mouseDistance2;
+	}
+	
+    gl_FragColor = pixel;
 }
