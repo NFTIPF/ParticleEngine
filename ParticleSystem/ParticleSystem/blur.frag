@@ -48,18 +48,25 @@ void main()
 	//pixel += texture2d(texture, xyCoord);
 	
 	//pixel /= 2;
-	vec4 white = vec4(255, 255, 255, 255);
-	vec4 fireColor = vec4(226, 88, 34, 255);
-	vec4 firePercent = fireColor/white;
+	vec4 white = vec4(1, 1, 1, 1);
+	vec4 deepColor = vec4(.15, .3, .88, 1);//vec4(.8863, .3451, .1373, 1.0);
+	vec4 highlightColor = vec4(.8863, .3451, .1373, 1.0);
+	vec4 deepPercent = deepColor/highlightColor;
+	vec4 highlightPercent = highlightColor/deepColor;
+	vec2 mousePos = vec2(mousePosition.x, 1080-mousePosition.y);
+	vec2 mouseDelta = abs(gl_FragCoord.xy - mousePos);
+	float mouseDistance = mouseDelta.x * mouseDelta.x + mouseDelta.y*mouseDelta.y;
+	mouseDistance = clamp(sqrt(mouseDistance)/100,0, 20000);
+
+	//pixel = vec4(0, .001, 0, 255) * mouseDistance;
+	//pixel.a = 255;
+	vec4 pixelMult = deepColor * highlightPercent/mouseDistance;
+	pixel = texture2D(texture, xyCoord)* pixelMult;
 	
-	vec2 mouseDelta = mousePosition - xyCoord;
-	float mouseDistance2 = mouseDelta.x * mouseDelta.x + mouseDelta.y*mouseDelta.y;
-	mouseDistance2 = 1/mouseDistance2;
-	pixel = texture2D(texture, xyCoord)*firePercent;
-	if(mouseDistance2 > .001)
-	{
-		pixel += white*mouseDistance2;
-	}
+	//if(mouseDistance < 600)
+	//{
+	//	pixel.rgb += vec3(2.5, 2.5, 2.5);
+	//}
 	
     gl_FragColor = pixel;
 }

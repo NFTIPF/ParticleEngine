@@ -23,11 +23,11 @@ int main()
 	shader.loadFromFile("blur.frag", sf::Shader::Fragment);
 	srand(static_cast <unsigned> (time(0)));
 
-	sf::RenderWindow window(sf::VideoMode(800, 800), "Partic-LE");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Partic-LE");
 	window.setFramerateLimit(60);
 	
-	ParticleSystem ps2(sf::Vector2f(200, 700));
-	ParticleSystem ps(sf::Vector2f(600, 700));
+	ParticleSystem ps2(sf::Vector2f(200, 700), (sf::Vector2f)window.getSize());
+	ParticleSystem ps(sf::Vector2f(600, 700), (sf::Vector2f)window.getSize());
 
 	sf::Clock clock;
 	sf::Time lastTime;
@@ -44,7 +44,7 @@ int main()
 
 	sf::RenderTexture destination; //drawing target
 	sf::RenderTexture source;	//source for shader
-	if (!destination.create(800, 800))
+	if (!destination.create(window.getSize().x, window.getSize().y))
 		return -1;
 
 	shader.setParameter("resolution", destination.getSize().x, destination.getSize().y);
@@ -59,8 +59,8 @@ int main()
 				window.close();
 		}
 
-		window.clear(sf::Color::White);
-		destination.clear(sf::Color::Black);
+		window.clear(sf::Color::Black);
+		destination.clear(sf::Color(0, 0, 0, 0));
 
 		
 		//t1 = std::thread(&ParticleSystem::update, &ps);
@@ -95,7 +95,7 @@ int main()
 		//t1.join();
 		//t2.join();
 		ps.setMousePos(sf::Mouse::getPosition(window));
-		shader.setParameter("mousePosition", sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+		shader.setParameter("mousePosition", (float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
 		ps.update();
 		//ps2.update();
 

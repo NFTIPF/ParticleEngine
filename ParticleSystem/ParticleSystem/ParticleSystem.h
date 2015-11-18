@@ -7,7 +7,7 @@
 class ParticleSystem
 {
 public:
-	ParticleSystem(sf::Vector2f);
+	ParticleSystem(sf::Vector2f pos, sf::Vector2f systemS);
 	~ParticleSystem();
 	void addParticle();
 	//void draw(sf::RenderWindow& window);
@@ -30,5 +30,6 @@ private:
 	sf::Vector2i mousePos;
 	sf::Texture texture;
 	sf::Vertex tmp;
+	sf::Vector2f systemSize;
 
 };
