@@ -19,9 +19,11 @@ public:
 
 	void setPosition(const sf::Vector2f& newPos);
 	sf::Vector2f getPosition();
+	sf::Vector2f getOrigin();
 	float getOpacity();
 
 private:
+	sf::Vector2f originalPosition;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	sf::Vector2f acceleration;

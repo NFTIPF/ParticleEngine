@@ -149,3 +149,6 @@ void ParticleSystem::doFrame(sf::RenderTexture& window) //function for threading
 	//t1.detach();
 	draw(window);
 }
+sf::Vector2f ParticleSystem::getPosition(){
+	return origin;
+}

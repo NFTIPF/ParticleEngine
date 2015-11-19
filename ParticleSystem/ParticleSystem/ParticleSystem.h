@@ -7,7 +7,7 @@
 class ParticleSystem
 {
 public:
-	ParticleSystem(sf::Vector2f pos, sf::Vector2f systemS, std::string texturePath);
+	ParticleSystem(sf::Vector2f pos,sf::Vector2f systemS, std::string texturePath);
 	~ParticleSystem();
 	void addParticle();
 	//void draw(sf::RenderWindow& window);
@@ -16,6 +16,7 @@ public:
 	void init();
 	void setMousePos(const sf::Vector2i& mP);
 	void doFrame(sf::RenderTexture& window); //function for threading
+	sf::Vector2f getPosition();
 	
 private:
 	std::vector <Particle*> particles;

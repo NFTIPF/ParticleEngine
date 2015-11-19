@@ -20,9 +20,9 @@ std::string intToString(int toConvert)
 int main()
 {
 	sf::Shader shader;
-	sf::Shader smokeShader;
+	//sf::Shader smokeShader;
 	shader.loadFromFile("blur.frag", sf::Shader::Fragment);
-	smokeShader.loadFromFile("smoke.frag", sf::Shader::Fragment);
+	//smokeShader.loadFromFile("smoke.frag", sf::Shader::Fragment);
 	srand(static_cast <unsigned> (time(0)));
 
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Partic-LE");
@@ -56,7 +56,7 @@ int main()
 		return -1;
 
 	shader.setParameter("resolution", destination.getSize().x, destination.getSize().y);
-	smokeShader.setParameter("resolution", destination2.getSize().x, destination2.getSize().y);
+	//smokeShader.setParameter("resolution", destination2.getSize().x, destination2.getSize().y);
 	std::thread t1, t2;
 	while (window.isOpen())
 	{
@@ -103,14 +103,17 @@ int main()
 	
 		//t1.join();
 		//t2.join();
-		ps.setMousePos(sf::Mouse::getPosition(window));
-		shader.setParameter("mousePosition", (float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
-		smokeShader.setParameter("mousePosition", (float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			ps.setMousePos(sf::Mouse::getPosition(window));
+
+		//ps2.setMousePos(sf::Mouse::getPosition(window));
+		shader.setParameter("mousePosition", (float)ps.getPosition().x, (float)ps.getPosition().y);
+		//smokeShader.setParameter("mousePosition", (float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
 		ps.update();
 		ps2.update();
 
 		ps.draw(destination);
-		ps2.draw(destination2);
+		//ps2.draw(destination2);
 
 		destination.display(); 
 
@@ -120,8 +123,8 @@ int main()
 		sf::Sprite mySprite(destination.getTexture());
 		sf::Sprite mySprite2(destination2.getTexture());
 		shader.setParameter("texture", source); 
-		smokeShader.setParameter("texture", source2);
-		window.draw(mySprite2, &smokeShader);
+		//smokeShader.setParameter("texture", source2);
+		//window.draw(mySprite2, &smokeShader);
 		window.draw(mySprite, &shader);
 		
 		

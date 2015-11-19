@@ -53,7 +53,7 @@ void main()
 	vec4 highlightColor = vec4(.1, .1, .1, .8);
 	vec4 deepPercent = deepColor/highlightColor;
 	vec4 highlightPercent = highlightColor/deepColor;
-	vec2 mousePos = vec2(mousePosition.x, 1080-mousePosition.y);
+	vec2 mousePos = vec2(mousePosition.x, mousePosition.y);
 	vec2 mouseDelta = abs(gl_FragCoord.xy - mousePos);
 	float mouseDistance = mouseDelta.x * mouseDelta.x + mouseDelta.y*mouseDelta.y;
 	mouseDistance = clamp(sqrt(sqrt(mouseDistance))/100,.2, 200);

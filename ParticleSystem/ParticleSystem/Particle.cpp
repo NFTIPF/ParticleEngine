@@ -7,6 +7,7 @@ Particle::Particle(sf::Vector2f l)
 {
 	reset();
 	position = l;
+	originalPosition = position;
 	lifeSpan = 0;
 }
 
@@ -74,6 +75,10 @@ void Particle::setPosition(const sf::Vector2f& newPos)
 sf::Vector2f Particle::getPosition()
 {
 	return position;
+}
+
+sf::Vector2f Particle::getOrigin(){
+	return originalPosition;
 }
 
 float Particle::getOpacity()
