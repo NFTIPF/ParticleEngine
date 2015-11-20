@@ -29,7 +29,7 @@ int main()
 	window.setFramerateLimit(60);
 	
 	ParticleSystem ps2(sf::Vector2f(200, 700), (sf::Vector2f)window.getSize(), "smoke.png");
-	ParticleSystem ps(sf::Vector2f(600, 700), (sf::Vector2f)window.getSize(), "fire.png");
+	ParticleSystem ps(sf::Vector2f(600, 700), (sf::Vector2f)window.getSize(), "particle.png");
 
 	sf::Clock clock;
 	sf::Time lastTime;
@@ -110,7 +110,7 @@ int main()
 		shader.setParameter("mousePosition", (float)ps.getPosition().x, (float)ps.getPosition().y);
 		//smokeShader.setParameter("mousePosition", (float)sf::Mouse::getPosition(window).x, (float)sf::Mouse::getPosition(window).y);
 		ps.update();
-		ps2.update();
+		//ps2.update();
 
 		ps.draw(destination);
 		//ps2.draw(destination2);
@@ -118,10 +118,10 @@ int main()
 		destination.display(); 
 
 		source = destination.getTexture();
-		source2 = destination2.getTexture();
+		//source2 = destination2.getTexture();
 		
 		sf::Sprite mySprite(destination.getTexture());
-		sf::Sprite mySprite2(destination2.getTexture());
+		//sf::Sprite mySprite2(destination2.getTexture());
 		shader.setParameter("texture", source); 
 		//smokeShader.setParameter("texture", source2);
 		//window.draw(mySprite2, &smokeShader);

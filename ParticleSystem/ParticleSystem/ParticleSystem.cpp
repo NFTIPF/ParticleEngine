@@ -22,7 +22,7 @@ float Clamp(float value, float min, float max)
 ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS, std::string texturePath)
 {
 	origin = position;
-	emmitanceRate = 70;
+	emmitanceRate = 10;
 	numParticles = 7000;
 	currentIndex = 0;
 	systemForce = sf::Vector2f(-.00f, .00f);
@@ -94,7 +94,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 	
 	std::vector<sf::Vertex> verts;
 	sf::Vertex tmp[4];
-	int halfsquareSize = 64;
+	int halfsquareSize = 128;
 	tmp[0].position = sf::Vector2f(halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[1].position = sf::Vector2f(-halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[2].position = sf::Vector2f(halfsquareSize + v.position.x, -halfsquareSize + v.position.y);

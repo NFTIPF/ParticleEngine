@@ -49,8 +49,8 @@ void main()
 	
 	//pixel /= 2;
 	vec4 white = vec4(1, 1, 1, 1);
-	vec4 deepColor = vec4(.1, .2, .4, 1);//vec4(.8863, .3451, .1373, 1.0);
-	vec4 highlightColor = vec4(.8863, .3451, .1373, 1.0);
+	vec4 deepColor = vec4(.1, .1, .1, 1);//vec4(.8863, .3451, .1373, 1.0);
+	vec4 highlightColor = vec4(.545, .27, .07, 1.0);
 	vec4 deepPercent = deepColor/highlightColor;
 	vec4 highlightPercent = highlightColor/deepColor;
 	vec2 mousePos = vec2(mousePosition.x, 1080-mousePosition.y);
@@ -63,7 +63,7 @@ void main()
 	vec4 locationTexture = texture2D(texture, xyCoord);
 	vec4 finalDeepColor = deepColor * (1/locationTexture.a);
 	vec4 finalHighlightColor = highlightColor * locationTexture.a;
-	vec4 pixelMult = finalDeepColor*mouseDistance + finalHighlightColor/mouseDistance;
+	vec4 pixelMult = finalDeepColor + finalHighlightColor;
 	pixel = locationTexture * pixelMult;
 	
 	//if(mouseDistance < 600)

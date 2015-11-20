@@ -25,7 +25,7 @@ void Particle::reset()
 	float randomX = -8 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 16));            //"random" floats
 	float randomY = -8 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 16));
 	float angle = atan(randomY / randomX)*2;
-	float speed = 5 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 15));
+	float speed = 3 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 5));
 	sf::Vector2f velVector = sf::Vector2f(cos(angle)*speed, sin(angle)*speed);
 	acceleration = sf::Vector2f(0, 0);
 	velocity = sf::Vector2f(0, 0);
