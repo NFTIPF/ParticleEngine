@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <time.h>
-
+#include "Algorithms.h"
 class Particle
 {
 public:
@@ -28,4 +28,5 @@ private:
 	sf::Vector2f velocity;
 	sf::Vector2f acceleration;
 	float lifeSpan;
+	bool dying;
 };

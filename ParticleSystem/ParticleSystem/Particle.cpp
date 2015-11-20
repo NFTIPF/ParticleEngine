@@ -8,18 +8,18 @@ Particle::Particle(sf::Vector2f l)
 	reset();
 	position = l;
 	originalPosition = position;
-	lifeSpan = 0;
+	lifeSpan = 255;
+	dying = false;
+	float randomX = 0 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1920));            //"random" floats
+	float randomY = 0 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1080));
+	position = sf::Vector2f(randomX, randomY);
 }
 
 Particle::~Particle()
 {
 }
 
-void normalize(sf::Vector2f& toDo)
-{
-	float mag = sqrt(toDo.x*toDo.x + toDo.y*toDo.y);
-	toDo /= mag;
-}
+
 void Particle::reset()
 {
 	float randomX = -8 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 16));            //"random" floats
@@ -29,7 +29,7 @@ void Particle::reset()
 	sf::Vector2f velVector = sf::Vector2f(cos(angle)*speed, sin(angle)*speed);
 	acceleration = sf::Vector2f(0, 0);
 	velocity = sf::Vector2f(0, 0);
-	velocity = velVector;
+	//velocity = velVector;
 }
 
 void Particle::activate(const int& amount)
@@ -45,7 +45,13 @@ void Particle::update()
 {
 	velocity += acceleration;
 	position += velocity;
-	lifeSpan -= 1;
+	if (dying)
+	{
+		lifeSpan -= 1;
+	}
+	clamp(velocity.x, -10, 10);
+	clamp(velocity.y, -10, 10);
+
 }
 
 void Particle::draw(sf::RenderWindow& window){
@@ -85,4 +91,6 @@ float Particle::getOpacity()
 {
 	return lifeSpan;
 }
+
+
 

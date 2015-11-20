@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <thread>
+#include "Algorithms.h"
 
 class ParticleSystem
 {
@@ -17,6 +18,8 @@ public:
 	void setMousePos(const sf::Vector2i& mP);
 	void doFrame(sf::RenderTexture& window); //function for threading
 	sf::Vector2f getPosition();
+	void setMouseGravity(const float& newGravity);
+	float getMouseGravity();
 	
 private:
 	std::vector <Particle*> particles;
@@ -31,5 +34,6 @@ private:
 	sf::Texture texture;
 	sf::Vertex tmp;
 	sf::Vector2f systemSize;
+	float mouseGravity;
 
 };

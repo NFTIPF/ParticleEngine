@@ -1,23 +1,7 @@
 #include "ParticleSystem.h"
 #include <iostream>
 #define PI 3.1415
-float Clamp(float value, float min, float max)
-{
-	if (value < min)
-	{
-		return min;
-	}
-	if (value > max)
-	{
-		return max;
-	}
-	if(min <= value || max >= value)
-	{
-	    return value;
-	}
 
-	return value; // default return
-}
 
 ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS, std::string texturePath)
 {
@@ -25,10 +9,11 @@ ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS, std:
 	emmitanceRate = 10;
 	numParticles = 7000;
 	currentIndex = 0;
-	systemForce = sf::Vector2f(-.00f, .00f);
+	systemForce = sf::Vector2f(-.01f, .01f);
 	particle.setRadius(2);
 	texture.loadFromFile(texturePath.c_str());
 	systemSize = systemS;
+	mouseGravity = 100;
 	init();
 }
 
@@ -72,17 +57,24 @@ void ParticleSystem::update()
 			{
 				particles[ii]->activate(0); //activate as dead
 			}
-			particles[ii]->applyForce(systemForce);
-			particleForce.x = particles[ii]->getPosition().x - origin.x;
+			//particles[ii]->applyForce(systemForce);
+			//particleForce.x = particles[ii]->getPosition().x - origin.x;
 			//if (particleForce.x < 0)
 			//	particleForce.x *= .*-particleForce.x;
 			//else
 			//	particleForce.x *= particleForce.x;
-			particleForce.x /= -3000;
-			particleForce.x = Clamp(particleForce.x, -.5f, 0.5f);
-			particleForce.y = 0;
+			//particleForce.x /= -3000;
+			//particleForce.x = Clamp(particleForce.x, -.5f, 0.5f);
+			//particleForce.y = 0;
 			//particles[ii]->applyForce(particleForce);
 			//particles[ii]->applyForce(sf::Vector2f(0, -.06));
+			sf::Vector2f dif = (sf::Vector2f)mousePos - particles[ii]->getPosition();
+
+			float mag2; mag(dif, mag2);  //find magnitude of dif vector
+			normalize(dif);
+			sf::Vector2f mouseGravityForce = dif * (mouseGravity / mag2);
+			//std::cout << mouseGravityForce.x << ", " << mouseGravityForce.y << std::endl;
+			particles[ii]->applyForce(mouseGravityForce);
 			particles[ii]->update();
 		}
 	}
@@ -94,7 +86,7 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 	
 	std::vector<sf::Vertex> verts;
 	sf::Vertex tmp[4];
-	int halfsquareSize = 128;
+	int halfsquareSize = 8;
 	tmp[0].position = sf::Vector2f(halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[1].position = sf::Vector2f(-halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[2].position = sf::Vector2f(halfsquareSize + v.position.x, -halfsquareSize + v.position.y);
@@ -151,4 +143,14 @@ void ParticleSystem::doFrame(sf::RenderTexture& window) //function for threading
 }
 sf::Vector2f ParticleSystem::getPosition(){
 	return origin;
+}
+
+void ParticleSystem::setMouseGravity(const float& newGravity)
+{
+	mouseGravity = newGravity;
+}
+
+float ParticleSystem::getMouseGravity()
+{
+	return mouseGravity;
 }
