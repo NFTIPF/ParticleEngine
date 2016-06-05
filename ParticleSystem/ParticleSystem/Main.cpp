@@ -29,7 +29,7 @@ int main()
 	window.setFramerateLimit(60);
 	
 	ParticleSystem ps2(sf::Vector2f(200, 700), (sf::Vector2f)window.getSize(), "smoke.png");
-	ParticleSystem ps(sf::Vector2f(600, 700), (sf::Vector2f)window.getSize(), "fire.png");
+	ParticleSystem ps(sf::Vector2f(600, 700), (sf::Vector2f)window.getSize(), "snowflake.png");
 
 	sf::Clock clock;
 	sf::Time lastTime;

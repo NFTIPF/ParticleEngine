@@ -7,7 +7,7 @@ ParticleSystem::ParticleSystem(sf::Vector2f position, sf::Vector2f systemS, std:
 {
 	origin = position;
 	emmitanceRate = 10;
-	numParticles = 7000;
+	numParticles = 1000;
 	currentIndex = 0;
 	systemForce = sf::Vector2f(-.01f, .01f);
 	particle.setRadius(2);
@@ -71,6 +71,7 @@ void ParticleSystem::update()
 			sf::Vector2f dif = (sf::Vector2f)mousePos - particles[ii]->getPosition();
 
 			float mag2; mag(dif, mag2);  //find magnitude of dif vector
+			clamp(mag2, 10, 1000);
 			normalize(dif);
 			sf::Vector2f mouseGravityForce = dif * (mouseGravity / mag2);
 			//std::cout << mouseGravityForce.x << ", " << mouseGravityForce.y << std::endl;
@@ -86,7 +87,8 @@ void makeCircle(const sf::Vertex& v, std::vector<sf::Vertex>& va)
 	
 	std::vector<sf::Vertex> verts;
 	sf::Vertex tmp[4];
-	int halfsquareSize = 8;
+	int halfsquareSize = 32;
+
 	tmp[0].position = sf::Vector2f(halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[1].position = sf::Vector2f(-halfsquareSize + v.position.x, halfsquareSize + v.position.y);
 	tmp[2].position = sf::Vector2f(halfsquareSize + v.position.x, -halfsquareSize + v.position.y);
